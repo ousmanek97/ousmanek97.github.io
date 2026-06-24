@@ -2,7 +2,13 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+).slice(0, 5);
 ---
 
 <!doctype html>
@@ -13,37 +19,84 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<section class="intro">
+				<p>
+					This is Mr.O's Basin. Ousmanek is a 17-year-old from Taipei who just moved to Seattle.
+					He writes about what he reads, what he learns, and whatever else catches his attention —
+					NBA, AI stuff, Supercell games, life abroad. No fixed schedule. Updated when there's
+					something worth saying.
+				</p>
+			</section>
+
+			<section class="recent">
+				<h2>Recent</h2>
+				<ul>
+					{posts.map(post => (
+						<li>
+							<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+							<span class="date"><FormattedDate date={post.data.pubDate} /></span>
+						</li>
+					))}
+				</ul>
+				<a href="/blog" class="all-posts">All posts →</a>
+			</section>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	main {
+		max-width: 680px;
+		margin: 0 auto;
+		padding: 2em 1em 4em;
+	}
+	.intro {
+		margin-bottom: 3em;
+	}
+	.intro p {
+		font-size: 1.05em;
+		line-height: 1.7;
+		color: rgb(var(--gray-dark));
+	}
+	.recent h2 {
+		font-size: 0.85em;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: rgb(var(--gray));
+		margin-bottom: 1em;
+	}
+	.recent ul {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 1.5em;
+	}
+	.recent ul li {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		padding: 0.5em 0;
+		border-bottom: 1px solid rgb(var(--gray-light));
+		gap: 1em;
+	}
+	.recent ul li a {
+		text-decoration: none;
+		color: rgb(var(--black));
+	}
+	.recent ul li a:hover {
+		text-decoration: underline;
+	}
+	.date {
+		font-size: 0.85em;
+		color: rgb(var(--gray));
+		white-space: nowrap;
+	}
+	.all-posts {
+		font-size: 0.9em;
+		color: rgb(var(--gray));
+		text-decoration: none;
+	}
+	.all-posts:hover {
+		color: rgb(var(--gray-dark));
+	}
+</style>
