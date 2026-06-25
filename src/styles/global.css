@@ -38,7 +38,7 @@ body {
 	margin: 0;
 	padding: 0;
 	text-align: left;
-	background: var(--basin-blue-50);
+	background: var(--basin-blue-100);
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: var(--basin-ink-soft);
