@@ -3,26 +3,15 @@ const today = new Date();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} Ousmanek. All rights reserved.
+	&copy; {today.getFullYear()} Ousmanek · written from a small basin
 </footer>
 <style>
 	footer {
-		padding: 2em 1em 6em 1em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--gray));
+		padding: 1.8em 1em 2.2em;
+		background: var(--basin-pink-100);
+		color: var(--basin-ink-mute);
 		text-align: center;
-	}
-	.social-links {
-		display: flex;
-		justify-content: center;
-		gap: 1em;
-		margin-top: 1em;
-	}
-	.social-links a {
-		text-decoration: none;
-		color: rgb(var(--gray));
-	}
-	.social-links a:hover {
-		color: rgb(var(--gray-dark));
+		font-family: 'Quicksand', sans-serif;
+		font-size: 0.85em;
 	}
 </style>
