@@ -15,68 +15,59 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 	<head>
 		<BaseHead title={title} description={description} />
 		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
+			.page-banner {
+				background: linear-gradient(180deg, #daedfb 0%, #f0e8f0 70%, var(--basin-blue-100) 100%);
+				padding: 2.5em 0 0;
+				overflow: hidden;
 			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
+			.banner-inner {
+				max-width: 760px;
 				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
+				padding: 0 2em 1.5em;
 			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
+			.banner-inner h1 {
+				font-family: 'Cormorant Garamond', serif;
+				font-style: italic;
+				font-size: 2.2em;
+				color: var(--basin-ink);
+				margin: 0.2em 0 0;
 			}
 			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
+				font-family: 'Quicksand', sans-serif;
+				font-size: 0.82em;
+				color: var(--basin-pink-500);
 			}
-			.last-updated-on {
-				font-style: italic;
+			.wave {
+				display: block;
+				width: 100%;
+				height: 32px;
+			}
+			main {
+				max-width: 760px;
+				margin: 0 auto;
+				padding: 2em 2em 4em;
+			}
+			.prose {
+				color: var(--basin-ink-soft);
+				line-height: 1.8;
 			}
 		</style>
 	</head>
 
 	<body>
 		<Header />
+		<div class="page-banner">
+			<div class="banner-inner">
+				<div class="date"><FormattedDate date={pubDate} /></div>
+				<h1>{title}</h1>
+			</div>
+			<svg class="wave" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true">
+				<path d="M0,20 C200,38 400,4 600,20 C800,36 1000,6 1200,20 L1200,40 L0,40 Z" fill="var(--basin-blue-100)"></path>
+			</svg>
+		</div>
 		<main>
 			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
 				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
 					<slot />
 				</div>
 			</article>
